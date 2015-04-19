@@ -19,6 +19,52 @@
     return YES;
 }
 
+- (NSString *)shortenLocationNameWithLocation:(NSDictionary *)location ToCount:(NSInteger)count{
+    
+    if (count < 0)
+    {
+        return location[@"name"];
+    }
+    return [location[@"name"] substringToIndex:count];
+}
+
+- (NSDictionary *)createLocationWithName:(NSString *)name Latitude:(NSNumber *)latitude Longitude:(NSNumber *)longitude
+{
+    NSDictionary *locations = @{@"name":name, @"latitude":latitude, @"longitude":longitude};
+    return locations;
+}
+
+- (NSArray *)getLocationNamesWithLocations:(NSArray *)locations
+{
+    NSMutableArray *names = [[NSMutableArray alloc] init];
+    for (NSDictionary *location in locations) {
+        [names addObject: location[@"name"]];
+    }
+                          return names;
+}
+
+- (BOOL)verifyLocation:(NSDictionary *)location
+{
+    if ([location objectForKey:@"name"] && [location objectForKey:@"longitude"] && [location objectForKey:@"latitude"] && [location count] == 3) {
+        return YES;
+    } else {
+        return NO;
+    }
+}
+
+- (NSDictionary *)searchForLocationName:(NSString *)name inLocations:(NSArray *)locations
+{
+    for (NSDictionary *location in locations) {
+        if (location[@"name"] == name) {
+            return location;
+        }
+        }
+    return nil;
+
+}
+
+
+
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
